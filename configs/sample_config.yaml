@@ -1,0 +1,46 @@
+train_params:
+  output_dir: output/train
+  experiment_name: default
+  experiment_tag: default #name for experiment in wandb logging
+  start_epoch: 0 #use -1 to resume the epoch number from restore_path ckpt given
+  batch_size: 2
+  num_epochs: 300
+  sync_bn: false #whether to sync batch norm layer in distributed training setting
+  restore_opt: true #whether to restore the optimizer states while resuming the training from given ckpt
+  num_workers: 0 #number of dataloader workers
+  log_interval: 50 
+  debug: true #if true plots the input image
+  debug_path: "debug" #folder where debug plots should be stored
+  debug_iters: 10 #number of iters in each epoch for which debug plot should be made
+  use_wandb: false #whether to use wandb to log checkpoints to cloud(Useful if training in colab)
+  use_ema: false #whether to maintain moving average of model weights that will be used in testing and inference
+  init_seed: 10
+#And many more training params here
+
+model_params:
+  num_layers: 10
+  restore_path: 
+#And many more model params here
+
+loss_params:
+  pos_weight: 1.0
+  neg_weight: 1.0
+#And many more loss params here
+
+optimizer_params:
+  opt_type: adam # give either 'adam' or 'sgd'
+  lr: 0.0001 #initial learning rate
+  weight_decay: 0.0005 #weight decay to use for weights. Bias components are excluded
+  warmup_epochs: 5 #Number of epoch for warming up the learning rate
+  step_epoch: 100 #Epoch number after which learning rate will be exponentially decayed according to step_value below
+  step_value: 0.99 #Determines the decay rate of learning rate after step_epoch
+#And many more optimizer params here
+
+dataset_params:
+  dataset_path: 
+  apply_color_aug: true #whether to apply photometric distortions
+  image_height: 418 
+  image_width: 418
+  resize_aspect: false #whether to resize the input image with aspect ratio maintained
+  augmentation_params:
+#And many more dataset params here

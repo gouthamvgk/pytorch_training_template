@@ -1,0 +1,9 @@
+*.pyc
+*.DS_Store
+*.swp
+
+output/
+.vscode/
+wandb/
+*.pt
+*.pth
