@@ -36,6 +36,9 @@ def init_torch_seeds(seed=0):
     else:  # faster, less reproducible
         cudnn.benchmark, cudnn.deterministic = True, False
 
+def worker_init_fn(w_id):
+    np.random.seed(torch.utils.data.get_worker_info().seed % (2**32-1))
+
 def init_seeds(seed=0):
     # Initialize random number generator (RNG) seeds
     random.seed(seed)

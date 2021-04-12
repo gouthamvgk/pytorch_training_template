@@ -14,7 +14,7 @@ import torch.optim as optim
 import sys
 import numpy as np
 from models.sample_model import my_model
-from utils.common import increment_path, init_seeds, clean_checkpoint, reduce_tensor, time_synchronized, ModelEMA, loss_fn, test_model
+from utils.common import increment_path, init_seeds, clean_checkpoint, reduce_tensor, time_synchronized, ModelEMA, loss_fn, test_model, worker_init_fn
 from utils.dataset import my_dataset
 from torch.utils.tensorboard import SummaryWriter
 
@@ -90,7 +90,8 @@ def train(config, rank):
                                             shuffle = False if is_distributed else True,
                                             sampler=sampler,
                                             collate_fn=None,
-                                            pin_memory=True)
+                                            pin_memory=True,
+                                            worker_init_fn=worker_init_fn)
     num_batches = len(train_dataloader)
     if rank in [-1, 0]:
         val_dataset = my_dataset(config['dataset_params'], typ="val")
